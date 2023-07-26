@@ -5,6 +5,16 @@ import { OngsRepository } from '../ongs-repositories'
 export class InMemoryOngRepository implements OngsRepository {
   public ongs: Ong[] = []
 
+  async findById(id: string) {
+    const ong = this.ongs.find((ong) => ong.id === id)
+
+    if (!ong) {
+      return null
+    }
+
+    return ong
+  }
+
   async create(data: Ong) {
     const ong: Ong = {
       id: data.id ?? randomUUID(),

@@ -3,6 +3,4 @@ import { create } from './create'
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/users', create)
-
-  app.get('/users')
 }

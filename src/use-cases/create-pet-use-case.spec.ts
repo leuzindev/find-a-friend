@@ -17,7 +17,7 @@ describe('Create Pet Use Case', () => {
       name: 'Kiara',
       characteristics: 'Caramelo',
       details: 'pequena',
-      locality: 'Cajamar',
+      locality: 'Sao paulo',
       createdAt: new Date(),
       city_Id: '1',
       ong_Id: '2',

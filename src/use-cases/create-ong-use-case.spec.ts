@@ -1,31 +1,40 @@
 import { describe, it, beforeEach, expect } from 'vitest'
 
-import { InMemoryUserRepository } from '@/repositories/in-memory/in-memory-users-repositories'
-import { GetUserUseCase } from './get-user-use-case'
+import { InMemoryOngRepository } from '@/repositories/in-memory/in-memory-ongs-repositories'
+import { CreateOngUseCase } from './create-ong-use-case'
 
-import { hash } from 'bcrypt'
+let ongsRepository: InMemoryOngRepository
+let sut: CreateOngUseCase
 
-let usersRepository: InMemoryUserRepository
-let sut: GetUserUseCase
-
-describe('Users Use Case', () => {
+describe('Ongs Use Case', () => {
   beforeEach(() => {
-    usersRepository = new InMemoryUserRepository()
-    sut = new GetUserUseCase(usersRepository)
+    ongsRepository = new InMemoryOngRepository()
+    sut = new CreateOngUseCase(ongsRepository)
   })
 
-  it('should be able to create a user', async () => {
-    const createdUser = await usersRepository.create({
-      name: 'Leonardo',
-      email: 'Leonardo@gmail.com',
-      password_hash: await hash('123456', 6),
+  it('should be able to create a ong', async () => {
+    const { ong } = await sut.execute({
+      id: '1',
+      name: 'Casa das patinhas',
+      address: 'Rua das cocas',
+      phone: '(11)2203-3294',
+      createdAt: new Date(),
+      isAdmin: false,
     })
 
-    const { user } = await sut.execute({
-      userId: createdUser.id,
+    expect(ong.id).toEqual(expect.any(String))
+  })
+
+  it('should be able to create a ong has admin', async () => {
+    const { ong } = await sut.execute({
+      id: '1',
+      name: 'Casa das patinhas',
+      address: 'Rua das cocas',
+      phone: '(11)2203-3294',
+      createdAt: new Date(),
+      isAdmin: true,
     })
 
-    expect(user.id).toEqual(expect.any(String))
-    expect(user.name).toEqual('Leonardo')
+    expect(ong.isAdmin).toEqual(true)
   })
 })

@@ -1,27 +1,33 @@
-import { UserAlreadyExistsError } from '@/use-cases/errors/user-already-existis-error'
-import { makeCreateUserUseCase } from '@/use-cases/factories/make-create-user-use-case'
+import { makeCreateOngUseCase } from '@/use-cases/factories/make-create-ong-use-case'
 import { FastifyReply, FastifyRequest } from 'fastify'
 
 import { z } from 'zod'
 
 export async function create(request: FastifyRequest, reply: FastifyReply) {
-  const createUserBodySchema = z.object({
+  const createOngBodySchema = z.object({
+    id: z.string(),
     name: z.string(),
-    email: z.string().email(),
-    password: z.string(),
+    address: z.string(),
+    phone: z.string(),
+    createdAt: z.date(),
+    isAdmin: z.boolean(),
   })
 
-  const { name, email, password } = createUserBodySchema.parse(request.body)
+  const { id, name, address, phone, createdAt, isAdmin } =
+    createOngBodySchema.parse(request.body)
 
   try {
-    const registerUseCase = makeCreateUserUseCase()
-    await registerUseCase.execute({
+    const CreateOngUseCase = makeCreateOngUseCase()
+    await CreateOngUseCase.execute({
+      id,
       name,
-      email,
-      password,
+      address,
+      phone,
+      createdAt,
+      isAdmin,
     })
   } catch (err) {
-    if (err instanceof UserAlreadyExistsError) {
+    if (err instanceof Error) {
       return reply.status(409).send({ message: err.message })
     }
     throw err
