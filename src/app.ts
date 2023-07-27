@@ -4,6 +4,7 @@ import fastifyJwt from '@fastify/jwt'
 import { env } from './env'
 import { ZodError } from 'zod'
 import { usersRoutes } from './http/controllers/users/routes'
+import fastifyCookie from '@fastify/cookie'
 
 export const app = fastify()
 
@@ -17,6 +18,8 @@ app.register(fastifyJwt, {
     expiresIn: '10m',
   },
 })
+
+app.register(fastifyCookie)
 
 app.register(usersRoutes)
 

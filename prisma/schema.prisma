@@ -33,15 +33,15 @@ model Pet {
   locality        String
   createdAt       DateTime @default(now())
 
-  ong     Ong     @relation(fields: [ong_Id], references: [id])
-  ong_Id  String
+  org     Org     @relation(fields: [org_Id], references: [id])
+  org_Id  String
   city    City?   @relation(fields: [city_Id], references: [id])
   city_Id String?
 
   @@map("pets")
 }
 
-model Ong {
+model Org {
   id        String   @id @default(uuid())
   name      String
   address   String
@@ -51,5 +51,5 @@ model Ong {
 
   Pet Pet[]
 
-  @@map("ongs")
+  @@map("orgs")
 }

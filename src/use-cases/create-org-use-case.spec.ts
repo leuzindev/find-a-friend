@@ -1,19 +1,19 @@
 import { describe, it, beforeEach, expect } from 'vitest'
 
 import { InMemoryOngRepository } from '@/repositories/in-memory/in-memory-ongs-repositories'
-import { CreateOngUseCase } from './create-ong-use-case'
+import { CreateOrgUseCase } from './create-org-use-case'
 
 let ongsRepository: InMemoryOngRepository
-let sut: CreateOngUseCase
+let sut: CreateOrgUseCase
 
-describe('Ongs Use Case', () => {
+describe('Orgs Use Case', () => {
   beforeEach(() => {
     ongsRepository = new InMemoryOngRepository()
-    sut = new CreateOngUseCase(ongsRepository)
+    sut = new CreateOrgUseCase(ongsRepository)
   })
 
-  it('should be able to create a ong', async () => {
-    const { ong } = await sut.execute({
+  it('should be able to create a org', async () => {
+    const { org } = await sut.execute({
       id: '1',
       name: 'Casa das patinhas',
       address: 'Rua das cocas',
@@ -22,11 +22,11 @@ describe('Ongs Use Case', () => {
       isAdmin: false,
     })
 
-    expect(ong.id).toEqual(expect.any(String))
+    expect(org.id).toEqual(expect.any(String))
   })
 
-  it('should be able to create a ong has admin', async () => {
-    const { ong } = await sut.execute({
+  it('should be able to create a org has admin', async () => {
+    const { org } = await sut.execute({
       id: '1',
       name: 'Casa das patinhas',
       address: 'Rua das cocas',
@@ -35,6 +35,6 @@ describe('Ongs Use Case', () => {
       isAdmin: true,
     })
 
-    expect(ong.isAdmin).toEqual(true)
+    expect(org.isAdmin).toEqual(true)
   })
 })
